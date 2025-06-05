@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "findcaa"
+version = "1.0.0"
+description = "A tool to find CAA DNS records with parent domain inheritance"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Author", email = "author@example.com"}
+]
+keywords = ["dns", "caa", "certificate", "authority", "authorization"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: Name Service (DNS)",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+
+dependencies = [
+    "dnspython>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pylint",
+    "black",
+    "pytest",
+]
+
+[project.scripts]
+findcaa = "findcaa:main"
+
+[project.urls]
+Homepage = "https://github.com/example/findcaa"
+Repository = "https://github.com/example/findcaa"
+Issues = "https://github.com/example/findcaa/issues"
+
+[tool.setuptools]
+py-modules = []
+script-files = ["findcaa.py"] 
