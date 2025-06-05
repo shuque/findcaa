@@ -10,17 +10,21 @@ import argparse
 import dns.resolver
 import dns.name
 import dns.rdatatype
+import dns.flags
 
-DEFAULT_TIMEOUT = 3 # seconds
+DEFAULT_TIMEOUT = 5 # seconds
 DEFAULT_EDNS_BUFSIZE = 1232 # bytes
 
 
-def get_resolver(addresses=None, dnssec_ok=False, timeout=DEFAULT_TIMEOUT,
-                 payload=DEFAULT_EDNS_BUFSIZE):
+def get_resolver(addresses=None, dnssec_ok=False, checking_disabled=False,
+                 timeout=DEFAULT_TIMEOUT, payload=DEFAULT_EDNS_BUFSIZE):
     """Return an appropriately configured Resolver object."""
 
     res = dns.resolver.Resolver()
-    res.set_flags(dns.flags.RD | dns.flags.AD)
+    flags = dns.flags.RD | dns.flags.AD
+    if checking_disabled:
+        flags |= dns.flags.CD
+    res.set_flags(flags)
     res.lifetime = timeout
     if dnssec_ok:
         res.use_edns(edns=0, ednsflags=dns.flags.DO, payload=payload)
@@ -67,10 +71,12 @@ def main():
                        help="Enable verbose output showing search progress")
     parser.add_argument("--resolver", type=str,
                        help="IP address of DNS resolver to use")
+    parser.add_argument("--cd", action="store_true",
+                       help="Disable DNSSEC checking (set CD flag)")
     args = parser.parse_args()
 
     resolver_addresses = [args.resolver] if args.resolver else None
-    resolver = get_resolver(addresses=resolver_addresses)
+    resolver = get_resolver(addresses=resolver_addresses, checking_disabled=args.cd)
     if not find_caa_records(args.name, resolver, args.verbose):
         print(f"No CAA records found for '{args.name}'")
 
