@@ -50,7 +50,7 @@ def find_caa_records(name, resolver, verbose=False):
             return True
         except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer) as error:
             if verbose:
-                print(f"No CAA records found for '{current}': {error}, trying parent domain")
+                print(f"No CAA records found for '{current}': {error}")
             current = current.parent()
             continue
         except Exception as error: # pylint: disable=broad-exception-caught
