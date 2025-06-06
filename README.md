@@ -9,7 +9,24 @@ Find relevant CAA record set for a domain name
 pip install dnspython
 ```
 
-## Usage
+## Help string
+
+```
+usage: findcaa [-h] [-v] [--resolver RESOLVER] [--cd] name
+
+Find CAA records for a DNS name (searches parent domains if needed)
+
+positional arguments:
+  name                 DNS name to lookup CAA records for
+
+optional arguments:
+  -h, --help           show this help message and exit
+  -v, --verbose        Enable verbose output showing search progress
+  --resolver RESOLVER  IP address of DNS resolver to use
+  --cd                 Disable DNSSEC checking (set CD flag)
+```
+
+## Example Usage
 
 ```
 $ findcaa.py myfss.us.af.mil
